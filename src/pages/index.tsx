@@ -1,92 +1,71 @@
-import { NextPage } from "next";
-import Head from "next/head";
-import { useMemo, useState } from "react";
-import { createTodo, deleteTodo, toggleTodo, useTodos } from "../api";
-import styles from "../styles/Home.module.css";
-import { Todo } from "../types";
-
-export const TodoList: React.FC = () => {
-  const { data: todos, error } = useTodos();
-
-  if (error != null) return <div>Error loading todos...</div>;
-  if (todos == null) return <div>Loading...</div>;
-
-  if (todos.length === 0) {
-    return <div className={styles.emptyState}>Try adding a todo ☝️️</div>;
-  }
-
-  return (
-    <ul className={styles.todoList}>
-      {todos.map(todo => (
-        <TodoItem todo={todo} />
-      ))}
-    </ul>
-  );
-};
-
-const TodoItem: React.FC<{ todo: Todo }> = ({ todo }) => (
-  <li className={styles.todo}>
-    <label
-      className={`${styles.label} ${todo.completed ? styles.checked : ""}`}
-    >
-      <input
-        type="checkbox"
-        checked={todo.completed}
-        className={`${styles.checkbox}`}
-        onChange={() => toggleTodo(todo)}
-      />
-      {todo.text}
-    </label>
-
-    <button className={styles.deleteButton} onClick={() => deleteTodo(todo.id)}>
-      ✕
-    </button>
-  </li>
-);
-
-const AddTodoInput = () => {
-  const [text, setText] = useState("");
-
-  return (
-    <form
-      onSubmit={async e => {
-        e.preventDefault();
-        createTodo(text);
-        setText("");
-      }}
-      className={styles.addTodo}
-    >
-      <input
-        className={styles.input}
-        placeholder="Buy some milk"
-        value={text}
-        onChange={e => setText(e.target.value)}
-      />
-      <button className={styles.addButton}>Add</button>
-    </form>
-  );
-};
+import { NextPage } from 'next';
+import Head from 'next/head';
+import Navbar from './components/Navbar';
+import { useState } from 'react';
 
 const Home: NextPage = () => {
+  const [text, setText] = useState('');
+  const [showTost, setShowToast] = useState(false);
+
+  const handleEnter = (e: any) => {
+    if (e.key === 'Enter') {
+      console.log('enter press here! ' + text);
+      e.preventDefault();
+      setText('');
+      setShowToast(true);
+    }
+    // e.preventDefault();
+    // setShowToast(true);
+  };
+
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Railway NextJS Prisma</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className={styles.header}>
-        <h1 className={styles.title}>Todos</h1>
-        <h2 className={styles.desc}>
-          NextJS app connected to Postgres using Prisma and hosted on{" "}
-          <a href="https://railway.app">Railway</a>
-        </h2>
-      </header>
-
-      <main className={styles.main}>
-        <AddTodoInput />
-
-        <TodoList />
+      <main>
+        <Navbar />
+        <div className="bg-white">
+          <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:py-16 lg:px-8 lg:py-20">
+            <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              <span className="block">Find your inner GM</span>
+              <span className="block text-indigo-600">
+                Sign up for the waitlist now
+              </span>
+            </h2>
+            <div className="mt-8 flex">
+              <div className="ml-3 inline-flex">
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Email
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                      onKeyDown={handleEnter}
+                      type="email"
+                      name="email"
+                      id="email"
+                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                      placeholder="you@example.com"
+                    />
+                  </div>
+                  {showTost && (
+                    <div className="mt-2 text-sm text-green-600">
+                      Thank you for signing up!
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   );
