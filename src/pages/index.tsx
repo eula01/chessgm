@@ -14,8 +14,6 @@ const Home: NextPage = () => {
       setText('');
       setShowToast(true);
     }
-    // e.preventDefault();
-    // setShowToast(true);
   };
 
   return (
@@ -64,6 +62,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
+            <div className="pt-6">UPDATE (1/17/2023): building ML models</div>
           </div>
         </div>
       </main>
