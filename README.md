@@ -1,6 +1,5 @@
 # chessgm
-
-see it live: 
+https://nextjs-production-4cd7.up.railway.app/
 
 ### tech stack
 web:
