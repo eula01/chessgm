@@ -30,7 +30,7 @@ const Home: NextPage = () => {
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
               <span className="block">Find your inner GM</span>
               <span className="block text-indigo-600">
-                Sign up for the waitlist now
+                Join the waitlist
               </span>
             </h2>
             <div className="mt-8 flex">
@@ -62,7 +62,6 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-            <div className="pt-6">UPDATE (1/11/2023): building ML models</div>
           </div>
         </div>
       </main>
